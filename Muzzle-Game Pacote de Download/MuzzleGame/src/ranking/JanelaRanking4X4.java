@@ -1,0 +1,270 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ranking;
+
+import arquivos.Arquivo4x4;
+import static jPuzzle.JPuzzle4x4.pontuacao4X4;
+import janelas.JanelaPrincipal;
+import static janelas.JanelaPrincipal.nomeJogador;
+import java.io.File;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author andrefumaneri
+ */
+public class JanelaRanking4X4 extends javax.swing.JFrame {
+
+    /**
+     * Creates new form JanelaRanking
+     */
+    public JanelaRanking4X4() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        setTitle("Sliding Puzzle");
+        VerificarPontuacao();
+    }
+    
+    String arquivo4x4 = "ranking4x4.txt";
+    MediaPlayer player;
+    
+    private void changeMusic(){
+        JFXPanel fxPanel = new JFXPanel();
+        Media pick = new Media(new File("src/sons/buttonMenu.mp3").toURI().toString());   
+        player = new MediaPlayer(pick);
+        player.play();
+    }
+     private void Gravar4x4() {
+    
+        String terceiroNS = nomeTerceiro4X4.getText();
+        String segundoNS = nomeSegundo4X4.getText();
+        String primeiroNS = nomePrimeiro4X4.getText();
+        
+        String terceiroS = pontuacaoTerceiro4X4.getText();
+        String segundoS = pontuacaoSegundo4X4.getText();
+        String primeiroS = pontuacaoPrimeiro4X4.getText();
+
+        String texto4x4 = primeiroNS+";"+segundoNS+";"+terceiroNS+";"+primeiroS+";"+segundoS+";"+terceiroS+";";
+        Arquivo4x4.Write4x4(arquivo4x4,texto4x4);
+}
+     
+     private void Ler4x4(){
+
+         String ler4x4 = Arquivo4x4.Read4x4(arquivo4x4);
+         
+         String primeiroNS = ler4x4.split(";")[0];
+         String segundoNS = ler4x4.split(";")[1];
+         String terceiroNS = ler4x4.split(";")[2];
+         String primeiroS = ler4x4.split(";")[3];
+         String segundoS = ler4x4.split(";")[4];
+         String terceiroS = ler4x4.split(";")[5];
+         
+         pontuacaoTerceiro4X4.setText(terceiroS);
+         pontuacaoSegundo4X4.setText(segundoS);
+         pontuacaoPrimeiro4X4.setText(primeiroS);
+         nomeTerceiro4X4.setText(terceiroNS);
+         nomeSegundo4X4.setText(segundoNS);
+         nomePrimeiro4X4.setText(primeiroNS);
+     }
+    
+    private void VerificarPontuacao() {
+         
+       Ler4x4();
+       
+       String terceiroS = pontuacaoTerceiro4X4.getText();
+       String segundoS = pontuacaoSegundo4X4.getText();
+       String primeiroS = pontuacaoPrimeiro4X4.getText();
+       
+       int terceiroI = Integer.parseInt(terceiroS);
+       int segundoI = Integer.parseInt(segundoS);
+       int primeiroI = Integer.parseInt(primeiroS);
+      
+       
+       if(!nomeJogador.isEmpty()){
+            if(pontuacao4X4 > terceiroI && pontuacao4X4 < segundoI){
+                terceiroI = pontuacao4X4;
+                nomeTerceiro4X4.setText(nomeJogador);
+            }
+            else if (pontuacao4X4 > segundoI && pontuacao4X4 < primeiroI){
+                terceiroI = segundoI;
+                nomeTerceiro4X4 = nomeSegundo4X4;
+                segundoI = pontuacao4X4;
+                nomeSegundo4X4.setText(nomeJogador);
+            }
+            else if (pontuacao4X4 > primeiroI){
+                terceiroI = segundoI;
+                nomeTerceiro4X4 = nomeSegundo4X4;
+                segundoI = primeiroI;
+                nomeSegundo4X4 = nomePrimeiro4X4;
+                primeiroI = pontuacao4X4;
+                nomePrimeiro4X4.setText(nomeJogador);
+            }
+            else if (pontuacao4X4 == primeiroI && pontuacao4X4 != segundoI ){
+                terceiroI = segundoI;
+                nomeTerceiro4X4 = nomeSegundo4X4;
+                segundoI = pontuacao4X4;
+                nomeSegundo4X4.setText(nomeJogador);
+            }
+            else if (pontuacao4X4 == primeiroI && pontuacao4X4 == segundoI && pontuacao4X4 != terceiroI){
+                terceiroI = pontuacao4X4;
+                nomeTerceiro4X4.setText(nomeJogador);
+            }
+            else if (pontuacao4X4 == segundoI && pontuacao4X4 != terceiroI){
+                terceiroI = pontuacao4X4;
+                nomeTerceiro4X4.setText(nomeJogador);
+            }
+
+            terceiroS = String.valueOf(terceiroI);
+            segundoS = String.valueOf(segundoI);
+            primeiroS = String.valueOf(primeiroI);
+
+            pontuacaoTerceiro4X4.setText(terceiroS);
+            pontuacaoSegundo4X4.setText(segundoS);
+            pontuacaoPrimeiro4X4.setText(primeiroS);
+
+            Gravar4x4();
+            nomeJogador = "";
+       }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel3 = new javax.swing.JPanel();
+        nomeTerceiro4X4 = new javax.swing.JLabel();
+        pontuacaoTerceiro4X4 = new javax.swing.JLabel();
+        nomePrimeiro4X4 = new javax.swing.JLabel();
+        pontuacaoPrimeiro4X4 = new javax.swing.JLabel();
+        nomeSegundo4X4 = new javax.swing.JLabel();
+        pontuacaoSegundo4X4 = new javax.swing.JLabel();
+        okBT = new javax.swing.JButton();
+        backgroundLB = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(800, 600));
+
+        jPanel3.setLayout(null);
+
+        nomeTerceiro4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        nomeTerceiro4X4.setForeground(new java.awt.Color(64, 64, 64));
+        nomeTerceiro4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nomeTerceiro4X4.setText("Bububu");
+        jPanel3.add(nomeTerceiro4X4);
+        nomeTerceiro4X4.setBounds(180, 420, 140, 21);
+
+        pontuacaoTerceiro4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        pontuacaoTerceiro4X4.setForeground(new java.awt.Color(64, 64, 64));
+        pontuacaoTerceiro4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pontuacaoTerceiro4X4.setText("700");
+        jPanel3.add(pontuacaoTerceiro4X4);
+        pontuacaoTerceiro4X4.setBounds(190, 450, 120, 21);
+
+        nomePrimeiro4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        nomePrimeiro4X4.setForeground(new java.awt.Color(64, 64, 64));
+        nomePrimeiro4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nomePrimeiro4X4.setText("Bababa");
+        jPanel3.add(nomePrimeiro4X4);
+        nomePrimeiro4X4.setBounds(330, 330, 140, 21);
+
+        pontuacaoPrimeiro4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        pontuacaoPrimeiro4X4.setForeground(new java.awt.Color(64, 64, 64));
+        pontuacaoPrimeiro4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pontuacaoPrimeiro4X4.setText("900");
+        jPanel3.add(pontuacaoPrimeiro4X4);
+        pontuacaoPrimeiro4X4.setBounds(340, 360, 120, 21);
+
+        nomeSegundo4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        nomeSegundo4X4.setForeground(new java.awt.Color(64, 64, 64));
+        nomeSegundo4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nomeSegundo4X4.setText("Bebebe");
+        jPanel3.add(nomeSegundo4X4);
+        nomeSegundo4X4.setBounds(480, 400, 140, 21);
+
+        pontuacaoSegundo4X4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        pontuacaoSegundo4X4.setForeground(new java.awt.Color(64, 64, 64));
+        pontuacaoSegundo4X4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pontuacaoSegundo4X4.setText("800");
+        jPanel3.add(pontuacaoSegundo4X4);
+        pontuacaoSegundo4X4.setBounds(480, 430, 140, 21);
+
+        okBT.setBackground(new java.awt.Color(204, 204, 255));
+        okBT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        okBT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/btOk.png"))); // NOI18N
+        okBT.setBorderPainted(false);
+        okBT.setContentAreaFilled(false);
+        okBT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                okBTMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                okBTMouseExited(evt);
+            }
+        });
+        okBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBTActionPerformed(evt);
+            }
+        });
+        jPanel3.add(okBT);
+        okBT.setBounds(680, 510, 96, 70);
+
+        backgroundLB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bkgRanking4x4.png"))); // NOI18N
+        backgroundLB.setText("jLabel1");
+        jPanel3.add(backgroundLB);
+        backgroundLB.setBounds(0, 0, 800, 600);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void okBTMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okBTMouseEntered
+        changeMusic();
+        okBT.setIcon(new ImageIcon("src/imagens/btOkShadow.png"));
+    }//GEN-LAST:event_okBTMouseEntered
+
+    private void okBTMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_okBTMouseExited
+        okBT.setIcon(new ImageIcon("src/imagens/btOk.png"));
+    }//GEN-LAST:event_okBTMouseExited
+
+    private void okBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBTActionPerformed
+        JanelaPrincipal.isPlaying = true;
+        new JanelaPrincipal().setVisible(true);
+        dispose(); 
+    }//GEN-LAST:event_okBTActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundLB;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel nomePrimeiro4X4;
+    private javax.swing.JLabel nomeSegundo4X4;
+    private javax.swing.JLabel nomeTerceiro4X4;
+    private javax.swing.JButton okBT;
+    private javax.swing.JLabel pontuacaoPrimeiro4X4;
+    private javax.swing.JLabel pontuacaoSegundo4X4;
+    private javax.swing.JLabel pontuacaoTerceiro4X4;
+    // End of variables declaration//GEN-END:variables
+}
